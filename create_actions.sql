@@ -1,0 +1,1 @@
+CREATE TABLE user_actions(name TEXT, product TEXT, action TEXT, price REAL);
