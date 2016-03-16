@@ -6,10 +6,10 @@
 
 import sys
 import random
+# from datetime import datetime
 
 NAMES = ['Alice', 'Bob', 'Carol', 'Dave', 'Emily', 'Frank', 'Gina']
 PRODUCTS = ['Apple', 'Orange', 'Banana', 'Blueberry', 'Raspberry', 'Apricot', 'Cherry', 'Grape', 'Mango']
-ACTIONS = ['view', 'addtocart', 'purchase']
 
 def generate(N, fn):
     with open(fn, 'w') as f:
@@ -17,17 +17,20 @@ def generate(N, fn):
         while i < N:
             name = random.choice(NAMES)
             product = random.choice(PRODUCTS)
-            # action = random.choice(ACTIONS)
             price = str(0.99)
 
-            # make sure every purchase has an addtocart and view
-            # make sure every addtocart has a view
-            a = random.randint(1, 3)
-            for j in xrange(a):
-                action = ACTIONS[j]
-                f.write("%s,%s,%s,%s\n" % (name, product, action, price))
-                i += 1
+            year = random.choice(['2014', '2015'])
+            month = str(random.choice(range(12)) + 1)
+            if len(month) == 1:
+                month = "0" + month
+            day = str(random.choice(range(28)) + 1)
+            if len(day) == 1:
+                day = "0" + day
+            dt = "%s-%s-%s 00:00:00" % (year, month, day)
+
+            f.write("%s,%s,%s,%s,%s\n" % (name, product, 'purchase', price, dt))
+            i += 1
 
 
 if __name__ == '__main__':
-    generate(int(sys.argv[1]), sys.argv[2])
+    generate(1000000, 'dt_actions.csv')
